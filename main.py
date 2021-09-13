@@ -32,7 +32,7 @@ def user_input(question):
             return False
 
 
-def get_score(player="computer"):
+def turn(player="computer"):
     score = 0
     counter = 1
 
@@ -88,10 +88,11 @@ def determine_cookie(computer_score, player_score, player):
 def get_int(question: str) -> int:
     """Checks if answer for given question is integer and returns as such."""
     while True:
-        if isinstance(val := int(input(question)), int):
+        try:
+            val = int(input(question))
             return val
-
-        print("Wrong value!")
+        except ValueError:
+            print("Wrong value!")
 
 
 def main():
@@ -105,24 +106,29 @@ def main():
 
         name = input("Your name: ")
 
+        if name == "computer":
+            print("Invaild input!")
+            continue
+
         if not users or name not in users:
             age = get_int("Your age: ")
 
             if age < 18:
                 print("Too young!")
-                break
+                continue
 
-            users.append(Player(name))
+            player = Player(name)
+            users.append(player)
+        else:
+            for user in users:
+                if name == user.get_name():
+                    player = user
 
-        for user in users:
-            if name == user:
-                player = user
-
-        player_score = get_score(name)
+        player_score = turn(name)
 
         print("-" * 20)
         print("Computer's turn:")
-        computer_score = get_score()
+        computer_score = turn()
 
         determine_cookie(computer_score, player_score, player)
 

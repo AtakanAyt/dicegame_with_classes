@@ -6,9 +6,6 @@ class Player:
     def get_name(self):
         return self._name
 
-    def set_name(self, name):
-        self._name = name
-
     def get_cookies(self):
         return self._cookies
 
@@ -17,6 +14,3 @@ class Player:
 
     def decrease_cookies(self):
         self._cookies -= 1
-
-    def __eq__(self, name):
-        return self._name == name
